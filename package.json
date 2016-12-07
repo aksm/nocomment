@@ -1,0 +1,28 @@
+{
+  "name": "nocomment",
+  "version": "1.0.0",
+  "description": "Aggregator for news sites with no comment sections.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aksm/nocomment.git"
+  },
+  "author": "Al Min",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aksm/nocomment/issues"
+  },
+  "homepage": "https://github.com/aksm/nocomment#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "materialize-css": "^0.97.8",
+    "mongoose": "^4.7.1",
+    "request": "^2.79.0"
+  }
+}
