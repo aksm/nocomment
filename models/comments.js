@@ -13,6 +13,14 @@ var commentSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  inappropriate: {
+    type: Number,
+    default: 0
+  },
+  spam: {
+    type: Number,
+    default: 0
   }
 
 });

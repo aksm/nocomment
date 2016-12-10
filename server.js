@@ -16,7 +16,7 @@ app.set("port", process.env.PORT || 8080);
 // Set static
 app.use("/public", express.static("public"));
 
-// Sets up the Express app to handle data parsing 
+// Set up the Express app to handle data parsing 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
@@ -43,5 +43,4 @@ require("./routes/routes.js")(app);
 
 // Listener
 // =============================================================
-
 app.listen(app.get("port"), function() {console.log("Hollaback on port: "+app.get("port"));});
