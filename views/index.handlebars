@@ -22,6 +22,7 @@
             <div class="card-image">
               <img src="{{image}}">
             </div>
+
             <div class="card-stacked">
               <span class="card-title">{{heading}}</span>
 
@@ -30,8 +31,42 @@
             </div>
 
             <div class="card-action">
-              <a href="{{url}}">Read More...</a>
+              <a href="{{url}}">Read More...</a><span class="card-title activator grey-text text-darken-4"><i class="material-icons right">comment</i></span>
             </div>
+
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4">Comments<i class="material-icons right">close</i></span>
+              {{#each comments}}
+              <div class="card-panel">
+                {{!-- <div class="card-title">{{commenter}}</div> --}}
+                <div class="card-content">
+
+                <p>{{comment}}</p>
+                </div>
+                <div class="card-footer"><div class="chip"><i class="material-icons">face</i>{{commenter}}</div></div>
+                <span class="right">{{dateFormat date "dddd, MMMM Do YYYY, h:mm:ss a"}}</span>
+              </div>
+              {{/each}}
+              
+              <form method="POST" class="card-panel" id="comment-form" action="/comment?_method=POST">
+                <input type="hidden" name="articleID" value="{{_id}}">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="comment" name="comment" type="text" class="validate materialize-textarea" required="required"></textarea>
+                    <label for="comment">Comment</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="comment-name" name="commenter" type="text" class="validate" required="required">
+                    <label for="comment-name">Name</label>
+                  </div>
+                  <br>
+                  <button class="btn waves-effect waves-light" type="submit" name="action">Post</button>
+                </div>
+              </form>
+
             </div>
 
           </div>

@@ -1,6 +1,5 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var methodOverride = require('method-override');
 var mongoose = require("mongoose");
 var app = express();
 var Promise = require("bluebird");
@@ -41,7 +40,6 @@ db.once("open", function() {
 // Routes
 // =============================================================
 require("./routes/routes.js")(app);
-// require("./routes/html.js")(app);
 
 // Listener
 // =============================================================

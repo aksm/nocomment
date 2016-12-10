@@ -3,10 +3,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
-  subject: {
-    type: String
-  },
-  username: {
+  commenter: {
     type: String,
     trim: true
   },

@@ -1,12 +1,22 @@
 var request = require("request");
 var cheerio = require("cheerio");
 var exphbs = require("express-handlebars");
+var methodOverride = require("method-override");
+var mongoose = require("mongoose");
 
 
 module.exports = function(app) {
+  var hbs = exphbs.create({
+    helpers: {
+      dateFormat: require("handlebars-dateformat")
+    },
+    defaultLayout: "main"
+  });
   app.set("views");
-  app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+  app.engine("handlebars", hbs.engine);
   app.set("view engine", "handlebars");
+
+  app.use(methodOverride('_method'));
 
   var Article = require("../models/articles.js");
   var Comment = require("../models/comments.js");
@@ -58,24 +68,43 @@ module.exports = function(app) {
         // });
       });
     });
-    Article.find({}).sort({date: -1}).exec(function(error, doc) {
-      if(error) res.send(error);
-      else {
-        // console.log(doc);
-        res.render("index", {
-          "article": doc
-        });
-      }
-    });
+    Article.find({})
+      .sort({date: -1})
+      .populate("comments")
+      .exec(function(error, doc) {
+        if(error) res.send(error);
+        else {
+          console.log(doc);
+          res.render("index", {
+            "article": doc
+          });
+        }
+      });
 
 
   });
-  // app.get("/api/news/all", function(req, res) {
-  //   Article.find({}, function(error, doc) {
-  //     if(error) res.send(error);
-  //     else res.send(doc);
-  //   });
-
-  // });
+  app.post("/comment", function(req, res) {
+    // console.log(req.body);
+    var newComment = new Comment({
+      commenter: req.body.commenter,
+      comment: req.body.comment
+    });
+    newComment.save(function(err, doc) {
+      if(err) res.send(err);
+      else {
+        var articleID = mongoose.Types.ObjectId(req.body.articleID);
+        Article.findOneAndUpdate(
+          {_id: articleID},
+          {$push: {"comments": doc._id}},
+          {new: true},
+          function(err, doc) {
+            if(err) res.send(err);
+            else {
+              res.send(200);
+            }
+          });
+      }
+    });
+  });
 
 };
